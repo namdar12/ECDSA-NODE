@@ -1,7 +1,9 @@
 import { useState } from "react";
 import server from "./server";
+import GenerateSignaure from "./Wallet";
 
-function Transfer({ address, setBalance }) {
+
+function Transfer({ address, setBalance, GenerateSignaure }) {
   const [sendAmount, setSendAmount] = useState("");
   const [recipient, setRecipient] = useState("");
 

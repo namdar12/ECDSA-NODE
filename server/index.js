@@ -36,6 +36,10 @@ app.get("/password/:password", (req,res) => {
 });
 
 app.post("/send", (req, res) => {
+  //todo: get a signature from the client-side application 
+  //recover the public address from the signature
+  //that public address will be the sender
+
   const { sender, recipient, amount, password } = req.body;
 
   setInitialBalance(sender);

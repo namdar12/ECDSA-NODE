@@ -1,10 +1,13 @@
 import server from "./server";
+const secp = require("ethereum-cryptography/secp256k1");
 
 async function GenerateSignature(evt, setBalance){
     const password = evt.target.value;
     const addressPass = await server.get(`password/${password}`);
     if(addressPass){
-      setBalance(0);
+
+
+      return signature
     }
   }
 
@@ -17,7 +20,7 @@ async function GenerateSignature(evt, setBalance){
 
 
 
-function Wallet({ address, setAddress, balance, setBalance, password, setPassword }) {
+function Wallet({ address, setAddress, balance, setBalance }) {
   async function onChange(evt) {
     const address = evt.target.value;
     setAddress(address);
