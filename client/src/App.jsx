@@ -1,5 +1,4 @@
 import Wallet from "./Wallet";
-import GenerateSignature from "./Wallet"
 import Transfer from "./Transfer";
 import "./App.scss";
 import { useState } from "react";
@@ -7,8 +6,8 @@ import { useState } from "react";
 function App() {
   const [balance, setBalance] = useState(0);
   const [address, setAddress] = useState("");
-  const [password, setPassword] = useState("");
-
+  const [privateKeyAddress, setPrivateKeyAddress] = useState("");
+  
   return (
     <div className="app">
       <Wallet
@@ -16,10 +15,13 @@ function App() {
         setBalance={setBalance}
         address={address}
         setAddress={setAddress}
-        password = {password}
-        setPassword = {setPassword}
+        setPrivateKeyAddress={setPrivateKeyAddress}
+        privateKeyAddress={privateKeyAddress}
       />
-      <Transfer setBalance={setBalance} address={address} />
+      <Transfer setBalance={setBalance} address={address} 
+        setPrivateKeyAddress={setPrivateKeyAddress}
+        privateKeyAddress={privateKeyAddress}
+      />
     </div>
   );
 }

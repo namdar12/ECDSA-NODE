@@ -1,24 +1,48 @@
 import { useState } from "react";
 import server from "./server";
-import GenerateSignaure from "./Wallet";
+import {GenerateSignature} from "./Signature";
+import {keccak256} from "ethereum-cryptography/keccak";
+import { toHex, utf8ToBytes} from "ethereum-cryptography/utils"
+import * as secp from "ethereum-cryptography/secp256k1";
 
+async function recoverKey(message, signature, recoveryBit) {
 
-function Transfer({ address, setBalance, GenerateSignaure }) {
+  const hash =  keccak256(utf8ToBytes(String(parseInt(message))));
+  return secp.recoverPublicKey(hash, signature, recoveryBit)
+}
+
+function Transfer({ address,privateKeyAddress, setBalance }) {
   const [sendAmount, setSendAmount] = useState("");
   const [recipient, setRecipient] = useState("");
 
   const setValue = (setter) => (evt) => setter(evt.target.value);
-
+  
+  const messageHash = keccak256(utf8ToBytes(sendAmount))
   async function transfer(evt) {
+
     evt.preventDefault();
+   
+    const [signature, recoveryBit] = await secp.sign(messageHash, privateKeyAddress, {recovered: true});
+
+    // console.log('messageHash')
+    // console.log(messageHash)
+    // console.log('Signature')
+    // console.log(signature)
+    // console.log('recoveryBit')
+    // console.log(recoveryBit)
+
+    let publicKey = await recoverKey(sendAmount,signature,recoveryBit)
+    console.log('Public Key')
+    console.log(toHex(publicKey))
 
     try {
       const {
         data: { balance },
       } = await server.post(`send`, {
-        sender: address,
-        amount: parseInt(sendAmount),
-        recipient,
+        signature: signature,
+        amount: sendAmount,
+        recoveryBit : recoveryBit,
+        recipient:recipient,
       });
       setBalance(balance);
     } catch (ex) {

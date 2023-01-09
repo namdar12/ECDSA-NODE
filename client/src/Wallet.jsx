@@ -1,33 +1,21 @@
 import server from "./server";
-const secp = require("ethereum-cryptography/secp256k1");
-
-async function GenerateSignature(evt, setBalance){
-    const password = evt.target.value;
-    const addressPass = await server.get(`password/${password}`);
-    if(addressPass){
-
-
-      return signature
-    }
-  }
-
-  //bring password from here, and see if you can access address from here?
-  //check to see if password and address match, generate a signature
-  //use this function in Transfer?
-  //read signature from post?
-  
+import { GeneratePublicKey } from "./Signature";
+import {keccak256} from "ethereum-cryptography/keccak";
 
 
 
-
-function Wallet({ address, setAddress, balance, setBalance }) {
+function Wallet({ address, setAddress, balance, setBalance, setPrivateKeyAddress, privateKeyAddress }) {
   async function onChange(evt) {
-    const address = evt.target.value;
-    setAddress(address);
-    if (address) {
+
+    let privateKeyAddress = evt.target.value;
+    setPrivateKeyAddress(privateKeyAddress);
+    let _address = GeneratePublicKey(privateKeyAddress);
+    setAddress(_address)
+    
+    if (privateKeyAddress) {
       const {
         data: { balance },
-      } = await server.get(`balance/${address}`);
+      } = await server.get(`balance/${_address}`);
       setBalance(balance);
     } else {
       setBalance(0);
@@ -37,16 +25,10 @@ function Wallet({ address, setAddress, balance, setBalance }) {
   return (
     <div className="container wallet">
       <h1>Your Wallet</h1>
-
       <label>
-        Wallet Address
-        <input placeholder="Type an address, for example: 0x1" value={address} onChange={onChange}></input>
+        Private Address
+        <input placeholder="Type a Private address, for example: 0x1" value={privateKeyAddress} onChange={onChange}></input>
       </label>
-      <label>
-        Password
-        <input placeholder="Type your password here" value={password} onChange = {GenerateSignature}></input>
-      </label>
-
       <div className="balance">Balance: {balance}</div>
     </div>
   );
