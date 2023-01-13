@@ -1,6 +1,5 @@
 import { useState } from "react";
 import server from "./server";
-import {GenerateSignature} from "./Signature";
 import {keccak256} from "ethereum-cryptography/keccak";
 import { toHex, utf8ToBytes} from "ethereum-cryptography/utils"
 import * as secp from "ethereum-cryptography/secp256k1";

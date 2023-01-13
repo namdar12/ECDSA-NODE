@@ -6,11 +6,9 @@ const secp = require("ethereum-cryptography/secp256k1");
 const keccak256 = require( "ethereum-cryptography/keccak");
 
 
-export const recoverKey = (message, signature, recoveryBit) => {
+async function recoverKey(message, signature, recoveryBit) {
 
     hash = keccak256(utf8ToBytes(message));
     return secp.recoverPublicKey(hash, signature, recoveryBit)
 
 }
-
-

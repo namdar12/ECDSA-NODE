@@ -11,16 +11,5 @@ export const GeneratePublicKey =  (privateAddress) => {
 
  }
 
-export const GenerateSignature = (messageHash,privateAddress) => {
 
-  
-
- }
-
- 
-
-
-  //check to see if password and address match, generate a signature
-  //use this function in Transfer?
-  //read signature from post?
 
