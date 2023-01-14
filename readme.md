@@ -30,6 +30,6 @@ The application should connect to the default server port (3042) automatically!
 
 _Hint_ - Use [nodemon](https://www.npmjs.com/package/nodemon) instead of `node` to automatically restart the server on any changes.
 
-##For ETHSD
+## For ETHSD
 
 I first created a script that would generate some private keys, which I then used to create public keys and address. Used the address on the client side to store each accounts amount and to make sure that private keys were not stored on the client side. At the client side, I would take in a private key, and convert it to a public key to view the balance. If they wanted to send money to an address; I would hash the amount they wanted to send and sign it using the private key. This would ouput a signature that was sent to the server. The server would then recover the public from the signature and convert it to an address. If the address from the signature had enough funds, it would send that amount to the specified address. 
